@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +24,6 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            cursor: none; /* Custom cursor override */
         }
 
         body {
@@ -32,29 +32,6 @@
             font-family: var(--font-mono);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-        }
-
-        /* Custom Cursor */
-        #cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background-color 0.3s;
-            mix-blend-mode: difference;
-        }
-
-        #cursor.hovered {
-            width: 50px;
-            height: 50px;
-            background-color: var(--accent);
-            opacity: 0.5;
         }
 
         /* Typography */
@@ -393,7 +370,6 @@
             font-weight: 800;
             text-transform: uppercase;
             font-size: 1.2rem;
-            cursor: none;
         }
 
         .checkout-btn:hover {
@@ -460,9 +436,6 @@
 </head>
 <body>
 
-    <!-- Custom Cursor -->
-    <div id="cursor"></div>
-
     <!-- Navigation -->
     <nav>
         <div class="logo">NIGHTSHADE</div>
@@ -515,7 +488,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>© 2026 NIGHTSHADE COFFEE ROASTERS.</p>
+        <p>Â© 2026 NIGHTSHADE COFFEE ROASTERS.</p>
         <p style="font-size: 0.8rem; margin-top: 1rem;">MADE IN LONDON</p>
     </footer>
 
@@ -524,7 +497,7 @@
     <aside class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
             <h3>YOUR STASH</h3>
-            <button class="close-cart" id="closeCart">✕</button>
+            <button class="close-cart" id="closeCart">âœ•</button>
         </div>
         <div class="cart-items" id="cartItems">
             <!-- Cart items injected here -->
@@ -533,7 +506,7 @@
         <div class="cart-footer">
             <div class="cart-total">
                 <span>TOTAL</span>
-                <span id="cartTotal">£0.00</span>
+                <span id="cartTotal">Â£0.00</span>
             </div>
             <button class="checkout-btn">CHECKOUT</button>
         </div>
@@ -583,14 +556,12 @@
         const cartItemsContainer = document.getElementById('cartItems');
         const cartCount = document.getElementById('cartCount');
         const cartTotal = document.getElementById('cartTotal');
-        const cursor = document.getElementById('cursor');
 
         // --- INITIALIZATION ---
         function init() {
             renderProducts();
             setupEventListeners();
             setupAnimations();
-            setupCursor();
         }
 
         // --- RENDER FUNCTIONS ---
@@ -683,21 +654,6 @@
                 const scrolled = window.pageYOffset;
                 const heroBg = document.querySelector('.hero-bg');
                 heroBg.style.transform = `scale(1.1) translateY(${scrolled * 0.5}px)`;
-            });
-        }
-
-        // --- CUSTOM CURSOR ---
-        function setupCursor() {
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-
-            // Hover effects for links and buttons
-            const targets = document.querySelectorAll('a, button, .cart-trigger, .product-card');
-            targets.forEach(target => {
-                target.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-                target.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
             });
         }
 
