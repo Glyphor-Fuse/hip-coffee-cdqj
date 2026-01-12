@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIGHTSHADE | London Roastery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080808;
+            --surface: #121212;
+            --text: #e0e0e0;
+            --accent: #ccff00;
+            --accent-dim: #8fa300;
+            --border: #2a2a2a;
+            --font-display: 'Syne', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: none; /* Custom cursor override */
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-mono);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Custom Cursor */
+        #cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            mix-blend-mode: difference;
+        }
+
+        #cursor.hovered {
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent);
+            opacity: 0.5;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .fluid-type {
+            font-size: clamp(3rem, 10vw, 12rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+
+        .outline-text {
+            -webkit-text-stroke: 1px var(--text);
+            color: transparent;
+            transition: color 0.5s ease;
+        }
+        
+        .outline-text:hover {
+            color: var(--accent);
+            -webkit-text-stroke: 1px var(--accent);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            mix-blend-mode: exclusion;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .cart-trigger {
+            position: relative;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -15px;
+            font-size: 0.7rem;
+            background: var(--accent);
+            color: var(--bg);
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            filter: grayscale(100%) contrast(1.2);
+            transform: scale(1.1);
+            transition: transform 2s ease-out;
+        }
+
+        .hero-content {
+            z-index: 2;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content span {
+            display: block;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+
+        /* Running Text Strip */
+        .marquee {
+            background: var(--accent);
+            color: var(--bg);
+            padding: 1rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transform: rotate(-2deg) scale(1.05);
+            position: relative;
+            z-index: 10;
+            margin-top: -5vh;
+            border-top: 2px solid var(--bg);
+            border-bottom: 2px solid var(--bg);
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 20s linear infinite;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Product Grid */
+        .shop-section {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+            font-size: 3rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 4rem 2rem;
+        }
+
+        .product-card {
+            position: relative;
+            group: flex;
+            flex-direction: column;
+        }
+
+        .product-image-container {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            background: var(--surface);
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            filter: grayscale(100%);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            font-family: var(--font-display);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-desc {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 1rem;
+            max-width: 80%;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .add-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 1rem;
+            width: 100%;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+
+        .add-btn:hover {
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+
+        .add-btn:hover::before {
+            transform: translateX(0);
+        }
+
+        /* Cart Drawer */
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 500px;
+            height: 100vh;
+            background: var(--surface);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+            border-left: 1px solid var(--border);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-drawer.open {
+            transform: translateX(0);
+            box-shadow: -50px 0 100px rgba(0,0,0,0.8);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .close-cart:hover {
+            color: var(--accent);
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.3s forwards;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            background: #222;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .cart-footer {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            margin-top: 1rem;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.5rem;
+            font-family: var(--font-display);
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn {
+            background: var(--accent);
+            color: var(--bg);
+            width: 100%;
+            padding: 1.5rem;
+            border: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            cursor: none;
+        }
+
+        .checkout-btn:hover {
+            background: #fff;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: #666;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive adjustments */
+        @media(max-width: 768px) {
+            .fluid-type {
+                font-size: 4rem;
+            }
+            .cart-drawer {
+                width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">NIGHTSHADE</div>
+        <div class="cart-trigger" id="cartBtn">
+            Cart [<span id="cartCount">0</span>]
+            <div class="cart-count" id="cartBubble" style="display:none;">0</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=2574&auto=format&fit=crop" alt="Dark Coffee Texture" class="hero-bg">
+        <div class="hero-content">
+            <h1 class="fluid-type">LONDON</h1>
+            <h1 class="fluid-type outline-text">ROASTED</h1>
+            <p style="margin-top: 2rem; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem;">Fuel for the Underground</p>
+        </div>
+        <div class="scroll-indicator">Scroll to brew</div>
+    </header>
+
+    <!-- Marquee -->
+    <div class="marquee">
+        <div class="marquee-content">
+            ETHICALLY SOURCED // ROASTED IN HACKNEY // OPEN 6AM - 11PM // NO DEC AF // ETHICALLY SOURCED // ROASTED IN HACKNEY // OPEN 6AM - 11PM // NO DEC AF //
+        </div>
+    </div>
+
+    <!-- Shop Section -->
+    <section class="shop-section" id="shop">
+        <div class="section-header">
+            <h2>THE GOODS</h2>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            <!-- Products injected via JS -->
+        </div>
+    </section>
+
+    <!-- About/Location Snippet -->
+    <section style="padding: 4rem 2rem; border-top: 1px solid var(--border); max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between;">
+        <div style="flex: 1; min-width: 300px; padding-right: 2rem;">
+            <h3 style="font-size: 2.5rem; margin-bottom: 1rem;">VISIT US</h3>
+            <p style="margin-bottom: 1rem;">Hidden in the railway arches of East London.</p>
+            <p class="location-link" style="text-decoration: underline; text-decoration-color: var(--accent);">Arch 23, Hackney Central, E8 1LL</p>
+        </div>
+        <div style="flex: 1; min-width: 300px; margin-top: 2rem;">
+            <img src="https://pub-92da557f6b314ad398066420640751f5.r2.dev/ai-images/repair-2e50f52a-d69b-4397-8c0d-a3fc03befe90.png" style="width: 100%; height: 300px; object-fit: cover; filter: grayscale(100%);" alt="Cafe Interior">
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 NIGHTSHADE COFFEE ROASTERS.</p>
+        <p style="font-size: 0.8rem; margin-top: 1rem;">MADE IN LONDON</p>
+    </footer>
+
+    <!-- Cart Overlay & Drawer -->
+    <div class="overlay" id="overlay"></div>
+    <aside class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>YOUR STASH</h3>
+            <button class="close-cart" id="closeCart">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items injected here -->
+            <div style="text-align: center; margin-top: 50%; opacity: 0.5;">Your cart is empty.</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>TOTAL</span>
+                <span id="cartTotal">£0.00</span>
+            </div>
+            <button class="checkout-btn">CHECKOUT</button>
+        </div>
+    </aside>
+
+    <script>
+        // --- DATA ---
+        const products = [
+            {
+                id: 1,
+                name: "HACKNEY DARK",
+                desc: "Notes of dark chocolate, tobacco, and rain.",
+                price: 14.00,
+                image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=2070&auto=format&fit=crop"
+            },
+            {
+                id: 2,
+                name: "NEON BLEND",
+                desc: "High acidity. Citrus punch. Not for the weak.",
+                price: 16.50,
+                image: "https://images.unsplash.com/photo-1611854779393-1b2ae54f1996?q=80&w=2070&auto=format&fit=crop"
+            },
+            {
+                id: 3,
+                name: "V60 KIT - MATTE",
+                desc: "Ceramic dripper in void black.",
+                price: 28.00,
+                image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=2121&auto=format&fit=crop"
+            },
+            {
+                id: 4,
+                name: "COLD BREW CANS",
+                desc: "4-Pack. Nitro infused. 200mg Caffeine.",
+                price: 18.00,
+                image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=2069&auto=format&fit=crop"
+            }
+        ];
+
+        let cart = [];
+
+        // --- DOM ELEMENTS ---
+        const productGrid = document.getElementById('productGrid');
+        const cartDrawer = document.getElementById('cartDrawer');
+        const overlay = document.getElementById('overlay');
+        const cartBtn = document.getElementById('cartBtn');
+        const closeCart = document.getElementById('closeCart');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartCount = document.getElementById('cartCount');
+        const cartTotal = document.getElementById('cartTotal');
+        const cursor = document.getElementById('cursor');
+
+        // --- INITIALIZATION ---
+        function init() {
+            renderProducts();
+            setupEventListeners();
+            setupAnimations();
+            setupCursor();
+        }
+
+        // --- RENDER FUNCTIONS ---
+        function renderProducts() {
+            productGrid.innerHTML = products.map(product => `
+                <article class="product-card magnetic-target">
+                    <div class="product-image-container">
+                        <img src="https://pub-92da557f6b314ad398066420640751f5.r2.dev/ai-images/repair-c4c79925-d08d-4719-9283-a80ef02c4cb3.png" alt="${product.name}" class="product-image">
+                    </div>
+                    <div class="product-meta">
+                        <div>
+                            <h3 class="product-title">${product.name}</h3>
+                            <p class="product-desc">${product.desc}</p>
+                        </div>
+                        <span class="product-price">£${product.price.toFixed(2)}</span>
+                    </div>
+                    <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
+                </article>
+            `).join('');
+        }
+
+        function renderCart() {
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div style="text-align: center; margin-top: 50%; opacity: 0.5;">Your cart is empty.</div>';
+                cartTotal.innerText = '£0.00';
+                cartCount.innerText = '0';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="https://pub-92da557f6b314ad398066420640751f5.r2.dev/ai-images/repair-837a93ab-b66b-4e29-9e7b-17f03b5a9119.png" alt="${item.name}">
+                    <div class="cart-item-details">
+                        <div style="font-weight: 700; margin-bottom: 0.2rem;">${item.name}</div>
+                        <div style="font-size: 0.9rem; color: #888;">£${item.price.toFixed(2)}</div>
+                    </div>
+                    <button onclick="removeFromCart(${item.cartId})" style="background:none; border:none; color: #666; font-size: 1.2rem; margin-left: auto; transition: color 0.2s;">×</button>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            cartTotal.innerText = '£' + total.toFixed(2);
+            cartCount.innerText = cart.length;
+        }
+
+        // --- LOGIC ---
+        window.addToCart = (id) => {
+            const product = products.find(p => p.id === id);
+            cart.push({ ...product, cartId: Date.now() });
+            renderCart();
+            openCart();
+        };
+
+        window.removeFromCart = (cartId) => {
+            cart = cart.filter(item => item.cartId !== cartId);
+            renderCart();
+        };
+
+        function openCart() {
+            cartDrawer.classList.add('open');
+            overlay.classList.add('active');
+        }
+
+        function closeCartDrawer() {
+            cartDrawer.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        // --- EVENT LISTENERS ---
+        function setupEventListeners() {
+            cartBtn.addEventListener('click', openCart);
+            closeCart.addEventListener('click', closeCartDrawer);
+            overlay.addEventListener('click', closeCartDrawer);
+        }
+
+        // --- ANIMATIONS & INTERACTIONS ---
+        function setupAnimations() {
+            // Reveal text on load
+            const heroSpans = document.querySelectorAll('.hero-content span');
+            heroSpans.forEach((span, index) => {
+                setTimeout(() => {
+                    span.style.transition = 'all 1s ease';
+                    span.style.opacity = '1';
+                    span.style.transform = 'translateY(0)';
+                }, 300 * (index + 1));
+            });
+
+            // Hero Image Parallax
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const heroBg = document.querySelector('.hero-bg');
+                heroBg.style.transform = `scale(1.1) translateY(${scrolled * 0.5}px)`;
+            });
+        }
+
+        // --- CUSTOM CURSOR ---
+        function setupCursor() {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            // Hover effects for links and buttons
+            const targets = document.querySelectorAll('a, button, .cart-trigger, .product-card');
+            targets.forEach(target => {
+                target.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                target.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+            });
+        }
+
+        // Run
+        init();
+
+    </script>
+
+<script>
+  let inspectorMode = false;
+  let hoveredElement = null;
+  let selectedElement = null;
+  
+  window.addEventListener('message', (event) => {
+    if (event.data?.type === 'SET_INSPECTOR_MODE') {
+      inspectorMode = event.data.enabled;
+      document.body.style.cursor = inspectorMode ? 'crosshair' : 'default';
+    }
+    
+    if (event.data?.type === 'LOCAL_UPDATE' && selectedElement) {
+      const update = event.data.update;
+      
+      if (update.text !== undefined) {
+        selectedElement.innerText = update.text;
+      }
+      
+      if (update.styles) {
+        Object.entries(update.styles).forEach(([prop, value]) => {
+          selectedElement.style[prop] = value;
+        });
+      }
+    }
+  });
+  
+  document.addEventListener('mouseover', (e) => {
+    if (!inspectorMode) return;
+    if (hoveredElement && hoveredElement !== selectedElement) {
+      hoveredElement.style.outline = '';
+    }
+    hoveredElement = e.target;
+    if (hoveredElement !== selectedElement) {
+      hoveredElement.style.outline = '2px solid #06b6d4';
+    }
+  });
+  
+  document.addEventListener('mouseout', (e) => {
+    if (!inspectorMode || !hoveredElement) return;
+    if (hoveredElement !== selectedElement) {
+      hoveredElement.style.outline = '';
+    }
+  });
+  
+  document.addEventListener('click', (e) => {
+    if (!inspectorMode) return;
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (selectedElement) {
+      selectedElement.style.outline = '';
+    }
+    
+    const el = e.target;
+    selectedElement = el;
+    el.style.outline = '3px solid #06b6d4';
+    
+    const rect = el.getBoundingClientRect();
+    const styles = window.getComputedStyle(el);
+    
+    window.parent.postMessage({
+      type: 'ELEMENT_SELECTED',
+      element: {
+        tagName: el.tagName.toLowerCase(),
+        text: el.innerText?.substring(0, 500) || '',
+        className: el.className || '',
+        styles: {
+          color: styles.color,
+          backgroundColor: styles.backgroundColor,
+          fontSize: styles.fontSize,
+          fontWeight: styles.fontWeight,
+          padding: styles.padding,
+          margin: styles.margin,
+        },
+        rect: {
+          top: rect.top,
+          left: rect.left,
+          width: rect.width,
+          height: rect.height,
+        },
+        selector: el.id ? '#' + el.id : (el.className ? '.' + el.className.split(' ')[0] : el.tagName.toLowerCase())
+      }
+    }, '*');
+  }, true);
+</script>
+</body>
+</html>

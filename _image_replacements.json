@@ -1,0 +1,31 @@
+{
+  "replacements": [
+    {
+      "originalUrl": "https://images.unsplash.com/photo-1442512595331-e89e7385a861?q=80&w=2670&auto=format&fit=crop",
+      "newUrl": "https://pub-92da557f6b314ad398066420640751f5.r2.dev/ai-images/repair-2e50f52a-d69b-4397-8c0d-a3fc03befe90.png",
+      "role": "content",
+      "aspectRatio": "16:9"
+    },
+    {
+      "originalUrl": "${product.image}",
+      "newUrl": "https://pub-92da557f6b314ad398066420640751f5.r2.dev/ai-images/repair-c4c79925-d08d-4719-9283-a80ef02c4cb3.png",
+      "role": "gallery",
+      "aspectRatio": "4:5"
+    },
+    {
+      "originalUrl": "${item.image}",
+      "newUrl": "https://pub-92da557f6b314ad398066420640751f5.r2.dev/ai-images/repair-837a93ab-b66b-4e29-9e7b-17f03b5a9119.png",
+      "role": "content",
+      "aspectRatio": "16:9"
+    }
+  ],
+  "stats": {
+    "imageUrlsFound": 4,
+    "validatedCount": 4,
+    "brokenCount": 3,
+    "replacedCount": 3,
+    "timedOutCount": 0,
+    "unknownCount": 0
+  },
+  "timestamp": "2026-01-12T00:02:12.483Z"
+}
