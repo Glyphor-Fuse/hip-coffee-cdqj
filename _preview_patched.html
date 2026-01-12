@@ -488,8 +488,9 @@
 
     <!-- Footer -->
     <footer>
-        <p>Â© 2026 NIGHTSHADE COFFEE ROASTERS.</p>
+        <p>ÃÂ© 2026 NIGHTSHADE COFFEE ROASTERS.</p>
         <p style="font-size: 0.8rem; margin-top: 1rem;">MADE IN LONDON</p>
+        <a href="/contact">Contact Us</a>
     </footer>
 
     <!-- Cart Overlay & Drawer -->
@@ -497,7 +498,7 @@
     <aside class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
             <h3>YOUR STASH</h3>
-            <button class="close-cart" id="closeCart">âœ•</button>
+            <button class="close-cart" id="closeCart">Ã¢Åâ¢</button>
         </div>
         <div class="cart-items" id="cartItems">
             <!-- Cart items injected here -->
@@ -506,7 +507,7 @@
         <div class="cart-footer">
             <div class="cart-total">
                 <span>TOTAL</span>
-                <span id="cartTotal">Â£0.00</span>
+                <span id="cartTotal">ÃÂ£0.00</span>
             </div>
             <button class="checkout-btn">CHECKOUT</button>
         </div>
@@ -576,7 +577,7 @@
                             <h3 class="product-title">${product.name}</h3>
                             <p class="product-desc">${product.desc}</p>
                         </div>
-                        <span class="product-price">£${product.price.toFixed(2)}</span>
+                        <span class="product-price">Â£${product.price.toFixed(2)}</span>
                     </div>
                     <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
                 </article>
@@ -586,7 +587,7 @@
         function renderCart() {
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '<div style="text-align: center; margin-top: 50%; opacity: 0.5;">Your cart is empty.</div>';
-                cartTotal.innerText = '£0.00';
+                cartTotal.innerText = 'Â£0.00';
                 cartCount.innerText = '0';
                 return;
             }
@@ -596,14 +597,14 @@
                     <img src="https://pub-92da557f6b314ad398066420640751f5.r2.dev/ai-images/repair-837a93ab-b66b-4e29-9e7b-17f03b5a9119.png" alt="${item.name}">
                     <div class="cart-item-details">
                         <div style="font-weight: 700; margin-bottom: 0.2rem;">${item.name}</div>
-                        <div style="font-size: 0.9rem; color: #888;">£${item.price.toFixed(2)}</div>
+                        <div style="font-size: 0.9rem; color: #888;">Â£${item.price.toFixed(2)}</div>
                     </div>
-                    <button onclick="removeFromCart(${item.cartId})" style="background:none; border:none; color: #666; font-size: 1.2rem; margin-left: auto; transition: color 0.2s;">×</button>
+                    <button onclick="removeFromCart(${item.cartId})" style="background:none; border:none; color: #666; font-size: 1.2rem; margin-left: auto; transition: color 0.2s;">Ã</button>
                 </div>
             `).join('');
 
             const total = cart.reduce((sum, item) => sum + item.price, 0);
-            cartTotal.innerText = '£' + total.toFixed(2);
+            cartTotal.innerText = 'Â£' + total.toFixed(2);
             cartCount.innerText = cart.length;
         }
 
