@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LuX } from 'react-icons/lu';
@@ -93,13 +94,13 @@ export default function Index() {
   const cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
 
   return (
-    <div className="bg-[#080808] text-[#e0e0e0] font-mono min-h-screen overflow-x-hidden selection:bg-[#ccff00] selection:text-black">
+    <div className="bg-[#080808] text-[#e0e0e0] font-mono min-h-screen overflow-x-hidden selection:bg-[#00BFFF] selection:text-black">
       {/* GLOBAL STYLES & FONTS */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap');
         
         :root {
-          --accent: #ccff00;
+          --accent: #00BFFF;
         }
         
         .font-display { font-family: 'Syne', sans-serif; }
@@ -111,8 +112,8 @@ export default function Index() {
           transition: color 0.5s ease;
         }
         .outline-text:hover {
-          color: #ccff00;
-          -webkit-text-stroke: 1px #ccff00;
+          color: #00BFFF;
+          -webkit-text-stroke: 1px #00BFFF;
         }
         
         /* Hide default cursor */
@@ -121,14 +122,14 @@ export default function Index() {
 
       {/* CUSTOM CURSOR */}
       <div 
-        className="fixed pointer-events-none z-[9999] rounded-full mix-blend-difference transition-all duration-300 ease-out border-2 border-[#ccff00]"
+        className="fixed pointer-events-none z-[9999] rounded-full mix-blend-difference transition-all duration-300 ease-out border-2 border-[#00BFFF]"
         style={{
           left: cursorPos.x,
           top: cursorPos.y,
           width: isHovering ? 50 : 20,
           height: isHovering ? 50 : 20,
           transform: 'translate(-50%, -50%)',
-          backgroundColor: isHovering ? '#ccff00' : 'transparent',
+          backgroundColor: isHovering ? '#00BFFF' : 'transparent',
           opacity: isHovering ? 0.5 : 1
         }}
       />
@@ -144,7 +145,7 @@ export default function Index() {
         >
           Cart [<span className="mx-1">{cart.length}</span>]
           {cart.length > 0 && (
-            <span className="absolute -top-2 -right-4 text-xs bg-[#ccff00] text-black w-[18px] h-[18px] flex items-center justify-center rounded-full">
+            <span className="absolute -top-2 -right-4 text-xs bg-[#00BFFF] text-black w-[18px] h-[18px] flex items-center justify-center rounded-full">
               {cart.length}
             </span>
           )}
@@ -191,7 +192,7 @@ export default function Index() {
       </header>
 
       {/* MARQUEE */}
-      <div className="bg-[#ccff00] text-[#080808] py-4 overflow-hidden -rotate-2 scale-105 relative z-10 -mt-[5vh] border-y-2 border-[#080808]">
+      <div className="bg-[#00BFFF] text-[#080808] py-4 overflow-hidden -rotate-2 scale-105 relative z-10 -mt-[5vh] border-y-2 border-[#080808]">
         <SignatureInteraction type="marquee" speed={20}>
           <span className="font-bold text-xl mx-4">
             ETHICALLY SOURCED // ROASTED IN HACKNEY // OPEN 6AM - 11PM // NO DEC AF // ETHICALLY SOURCED // ROASTED IN HACKNEY // OPEN 6AM - 11PM // NO DEC AF //
@@ -222,14 +223,14 @@ export default function Index() {
                   <h3 className="text-2xl font-display mb-2">{product.name}</h3>
                   <p className="text-sm text-[#888] max-w-[80%]">{product.desc}</p>
                 </div>
-                <span className="font-bold text-[#ccff00]">£{product.price.toFixed(2)}</span>
+                <span className="font-bold text-[#00BFFF]">£{product.price.toFixed(2)}</span>
               </div>
               <button 
                 onClick={() => addToCart(product)}
-                className="mt-auto w-full p-4 border border-[#2a2a2a] text-[#e0e0e0] uppercase font-bold relative overflow-hidden group/btn transition-colors duration-300 hover:text-[#080808] hover:border-[#ccff00]"
+                className="mt-auto w-full p-4 border border-[#2a2a2a] text-[#e0e0e0] uppercase font-bold relative overflow-hidden group/btn transition-colors duration-300 hover:text-[#080808] hover:border-[#00BFFF]"
               >
                 <span className="relative z-10">Add to Cart</span>
-                <div className="absolute inset-0 bg-[#ccff00] transform -translate-x-full transition-transform duration-300 ease-out group-hover/btn:translate-x-0 z-0" />
+                <div className="absolute inset-0 bg-[#00BFFF] transform -translate-x-full transition-transform duration-300 ease-out group-hover/btn:translate-x-0 z-0" />
               </button>
             </article>
           ))}
@@ -242,7 +243,7 @@ export default function Index() {
           <Reveal>
             <h3 className="font-display text-5xl mb-4">VISIT US</h3>
             <p className="mb-4">Hidden in the railway arches of East London.</p>
-            <a href="#" className="underline decoration-[#ccff00] hover-target">Arch 23, Hackney Central, E8 1LL</a>
+            <a href="#" className="underline decoration-[#00BFFF] hover-target">Arch 23, Hackney Central, E8 1LL</a>
           </Reveal>
         </div>
         <div className="flex-1 min-w-[300px] mt-8 md:mt-0">
@@ -287,7 +288,7 @@ export default function Index() {
                 <h3 className="font-display text-2xl uppercase">YOUR STASH</h3>
                 <button 
                   onClick={() => setIsCartOpen(false)} 
-                  className="text-2xl hover:text-[#ccff00] transition-colors hover-target"
+                  className="text-2xl hover:text-[#00BFFF] transition-colors hover-target"
                 >
                   <LuX />
                 </button>
@@ -325,7 +326,7 @@ export default function Index() {
                   <span>TOTAL</span>
                   <span>£{cartTotal.toFixed(2)}</span>
                 </div>
-                <button className="w-full bg-[#ccff00] text-[#080808] p-6 font-extrabold uppercase text-xl hover:bg-white transition-colors hover-target">
+                <button className="w-full bg-[#00BFFF] text-[#080808] p-6 font-extrabold uppercase text-xl hover:bg-white transition-colors hover-target">
                   CHECKOUT
                 </button>
               </div>
@@ -336,3 +337,4 @@ export default function Index() {
     </div>
   );
 }
+

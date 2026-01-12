@@ -24,14 +24,13 @@
           --secondary-foreground: 220 9% 46%;
           --muted: 220 14% 96%;
           --muted-foreground: 220 9% 46%;
-          --accent: 220 14% 96%;
+          --accent: #00BFFF; /* Updated to electric blue */
           --accent-foreground: 220 9% 46%;
           --destructive: 0 84% 60%;
           --destructive-foreground: 210 20% 98%;
           --border: 220 13% 91%;
           --input: 220 13% 91%;
           --ring: 240 100% 50%; /* Changed to electric blue */
-          --radius: 0.5rem;
         }
 
         .dark {
@@ -83,9 +82,32 @@
 
       /* Selection */
       ::selection {
-        background-color: hsla(var(--primary), 0.2);
+        background-color: #00BFFF; /* Updated to electric blue */
         color: hsl(var(--foreground));
       }
+
+      /* Styles from Index.tsx */
+      @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap');
+        
+      :root {
+        --accent: #00BFFF;
+      }
+      
+      .font-display { font-family: 'Syne', sans-serif; }
+      .font-mono { font-family: 'Space Mono', monospace; }
+      
+      .outline-text {
+        -webkit-text-stroke: 1px #e0e0e0;
+        color: transparent;
+        transition: color 0.5s ease;
+      }
+      .outline-text:hover {
+        color: #00BFFF;
+        -webkit-text-stroke: 1px #00BFFF;
+      }
+      
+      /* Hide default cursor */
+      body, a, button { cursor: none; }
     </style>
   </head>
   <body>
